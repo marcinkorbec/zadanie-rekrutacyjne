@@ -1,0 +1,30 @@
+body {
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  height: auto;
+  width: 100vw;
+  overflow-y: scroll;
+  background: linear-gradient(to right, #6ebce2, #3a7fd5);
+  box-shadow: inset 0 -5px 10px rgba(0,0,0,.1);
+}
+
+.container {
+  background-color: white;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  padding: 1.5em;
+  box-shadow: 3px 3px 20px rgba(0,0,0,.3);
+  border-radius: 7px;
+}
+.mb-3 {
+  margin-bottom: 1rem;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+.text-right {
+  text-align: right;
+}
