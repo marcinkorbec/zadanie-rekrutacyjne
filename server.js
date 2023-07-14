@@ -8,18 +8,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cors());
 
-app.get('/get-employees', (req, res) => {
+app.get('/get-employees', async (req, res) => {
   const filePath = path.join(__dirname, 'data', 'employees.json');
 
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Błąd podczas odczytu pliku:', err);
-      res.status(500).json({ error: 'Błąd podczas odczytu pliku' });
-    } else {
-      const jsonData = JSON.parse(data);
-      res.json(jsonData);
-    }
-  });
+  try {
+    const data = await fs.promises.readFile(filePath, 'utf8');
+    const jsonData = JSON.parse(data);
+    res.json(jsonData);
+  } catch (err) {
+    console.error('Błąd podczas odczytu pliku:', err);
+    res.status(500).json({ error: 'Błąd podczas odczytu pliku' });
+  }
 });
 
 app.post('/save-employees', (req, res) => {
