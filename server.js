@@ -36,19 +36,19 @@ app.post('/save-employees', (req, res) => {
   });
 });
 
-app.delete('/delete-employees', (req, res) => {
-  const filePath = path.join(__dirname, 'data', 'employees.json');
+// app.delete('/delete-employees', (req, res) => {
+//   const filePath = path.join(__dirname, 'data', 'employees.json');
 
-  fs.unlink(filePath, (err) => {
-    if (err) {
-      console.error('Błąd podczas usuwania pliku:', err);
-      res.status(500).json({ error: 'Błąd podczas usuwania pliku' });
-    } else {
-      console.log('Plik JSON został usunięty pomyślnie.');
-      res.json({ message: 'Plik JSON został usunięty pomyślnie' });
-    }
-  });
-});
+//   fs.unlink(filePath, (err) => {
+//     if (err) {
+//       console.error('Błąd podczas usuwania pliku:', err);
+//       res.status(500).json({ error: 'Błąd podczas usuwania pliku' });
+//     } else {
+//       console.log('Plik JSON został usunięty pomyślnie.');
+//       res.json({ message: 'Plik JSON został usunięty pomyślnie' });
+//     }
+//   });
+// });
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Serwer nasłuchuje na porcie 3000!');

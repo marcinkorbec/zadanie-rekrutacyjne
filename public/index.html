@@ -72,6 +72,41 @@
             </div>
         </form>
     </div>
+    <div class="container" id="edit-employee-view">
+        <div class="edit-view">
+            <!-- Formularz edycji -->
+            <form id="edit-employee-form">
+              <h2>Edytuj pracownika</h2>
+              <div class="mb-3">
+                <label for="edit-first-name" class="form-label">Imię:</label>
+                <input type="text" class="form-control" id="edit-first-name" required>
+              </div>
+              <div class="mb-3">
+                <label for="edit-last-name" class="form-label">Nazwisko:</label>
+                <input type="text" class="form-control" id="edit-last-name" required>
+              </div>
+              <div class="mb-3">
+                <label for="edit-position" class="form-label">Stanowisko:</label>
+                <input type="text" class="form-control" id="edit-position" required>
+              </div>
+              <div class="mb-3">
+                <label for="edit-branch" class="form-label">Lokalizacja filii:</label>
+                <input type="text" class="form-control" id="edit-branch" required>
+              </div>
+              <div class="mb-3">
+                <label for="edit-start-date" class="form-label">Data rozpoczęcia pracy:</label>
+                <input type="date" class="form-control" id="edit-start-date" required>
+              </div>
+              <div class="mb-3">
+                <label for="edit-salary" class="form-label">Zarobki:</label>
+                <input type="number" class="form-control" id="edit-salary" required>
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+              </div>
+            </form>
+          </div>
+    </div>
     <div class="container" id="list-employees-view">
       <h2 class="mt-3">Lista pracowników</h2>
         <table id="employees-table" class="table">
