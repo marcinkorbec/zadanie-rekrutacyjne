@@ -70,7 +70,7 @@ $(document).ready(function() {
   });
 
   async function loadEmployeesFromServer() {
-    const serverUrl = 'http://localhost:3000/';
+    const serverUrl = '/';
 
     try {
       const response = await fetch(serverUrl + 'get-employees');
@@ -106,7 +106,7 @@ $(document).ready(function() {
 
   function saveEmployeesToJson(employees) {
     const jsonData = JSON.stringify(employees);
-    const serverUrl = 'http://localhost:3000/';
+    const serverUrl = '/';
 
     $.ajax({
       url: serverUrl + 'save-employees',
