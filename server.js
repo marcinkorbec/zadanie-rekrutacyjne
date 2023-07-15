@@ -50,6 +50,6 @@ app.delete('/delete-employees', (req, res) => {
   });
 });
 
-app.listen(3000, '0.0.0.0', () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Serwer nasłuchuje na porcie 3000!');
 });
