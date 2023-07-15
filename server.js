@@ -17,7 +17,7 @@ app.get('/get-employees', async (req, res) => {
     res.json(jsonData);
   } catch (err) {
     console.error('Błąd podczas odczytu pliku:', err);
-    res.status(500).json({ error: 'Błąd podczas odczytu pliku' });
+    res.status(500).json({error: 'Błąd podczas odczytu pliku'});
   }
 });
 
@@ -28,27 +28,13 @@ app.post('/save-employees', (req, res) => {
   fs.writeFile(filePath, jsonData, (err) => {
     if (err) {
       console.error('Błąd podczas zapisywania pliku:', err);
-      res.status(500).json({ error: 'Błąd podczas zapisywania pliku' });
+      res.status(500).json({error: 'Błąd podczas zapisywania pliku'});
     } else {
       console.log('Plik JSON został zapisany pomyślnie.');
-      res.json({ message: 'Plik JSON został zapisany pomyślnie' });
+      res.json({message: 'Plik JSON został zapisany pomyślnie'});
     }
   });
 });
-
-// app.delete('/delete-employees', (req, res) => {
-//   const filePath = path.join(__dirname, 'data', 'employees.json');
-
-//   fs.unlink(filePath, (err) => {
-//     if (err) {
-//       console.error('Błąd podczas usuwania pliku:', err);
-//       res.status(500).json({ error: 'Błąd podczas usuwania pliku' });
-//     } else {
-//       console.log('Plik JSON został usunięty pomyślnie.');
-//       res.json({ message: 'Plik JSON został usunięty pomyślnie' });
-//     }
-//   });
-// });
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Serwer nasłuchuje na porcie 3000!');

@@ -81,10 +81,15 @@ h2, h1 {
   max-width: 100%;
 }
 
-.navbar-toggler {
-  position: relative;
-  right: 0;
+
+#logo-link {
+  transition: opacity 0.3s ease; /* Dodajemy efekt przejścia */
 }
+
+.hide-logo #logo-link {
+  display: none;
+}
+
 
 @media (max-width: 990px) {
   body {
@@ -101,6 +106,12 @@ h2, h1 {
 
   #list-employees-view h2 {
     text-align: center;
+  }
+
+  .navbar-nav.flex-column .nav-link {
+    padding: .5rem 1rem; /* Dodajemy odpowiednie marginesy dla linków w menu */
+    text-align: center; /* Wyśrodkowujemy tekst w linkach */
+    border-top: 1px solid #dee2e6; /* Dodajemy górną krawędź dla separatorów */
   }
 }
 

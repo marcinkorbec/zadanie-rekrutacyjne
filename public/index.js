@@ -1,75 +1,77 @@
-$(document).ready(function() {
-    const table = $('#employees-table').DataTable({
-      language: {
-        url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Polish.json'
-      },
-      columnDefs: [
-        { targets: [0], visible: false },
-        { targets: [6], render: $.fn.dataTable.render.number(',', '.', 2, 'PLN') }
-      ],
-      order: [[2, 'asc']],
-      paging: true
-    });
+$(document).ready(function () {
+  const table = $('#employees-table').DataTable({
+    language: {
+      url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Polish.json'
+    },
+    columnDefs: [
+      {targets: [0], visible: false},
+      {targets: [6], render: $.fn.dataTable.render.number(',', '.', 2, 'PLN')}
+    ],
+    order: [[2, 'asc']],
+    paging: true
+  });
 
-    // Ukrywanie widoków na początku
-    $('#add-employee-view').hide();
+  // Ukrywanie widoków na początku
+  $('#add-employee-view').hide();
+  $('#list-employees-view').hide();
+  $('#edit-employee-view').hide();
+
+  // Wyświetlanie widoku formularza po kliknięciu w link
+  $('#add-employee-link').click(function () {
     $('#list-employees-view').hide();
+    $('#introduction-view').hide();
     $('#edit-employee-view').hide();
+    $('#add-employee-view').show();
+  });
 
-    // Wyświetlanie widoku formularza po kliknięciu w link
-    $('#add-employee-link').click(function() {
-        $('#list-employees-view').hide();
-        $('#introduction-view').hide();
-        $('#edit-employee-view').hide();
-        $('#add-employee-view').show();
+  // Wyświetlanie widoku listy pracowników po kliknięciu w link
+  $('#list-employees-link').click(function () {
+    $('#add-employee-view').hide();
+    $('#introduction-view').hide();
+    $('#edit-employee-view').hide();
+    $('#list-employees-view').show();
+  });
+
+  $('.hamburger-button').click(function () {
+    $('.hamburger-menu').toggleClass('open');
+  });
+
+  $(document).ready(function () {
+    $('.navbar-toggler').click(function () {
+      const logoLink = $('#logo-link');
+      if (logoLink.css('display') !== 'none') {
+        logoLink.css('display', 'none');
+      } else {
+        logoLink.css('display', '');
+      }
     });
+  });
 
-    // Wyświetlanie widoku listy pracowników po kliknięciu w link
-    $('#list-employees-link').click(function() {
-        $('#add-employee-view').hide();
-        $('#introduction-view').hide();
-        $('#edit-employee-view').hide();
-        $('#list-employees-view').show();
-    });
+  $('#employee-form').submit(function (e) {
+    e.preventDefault();
 
-  $('#employee-form').submit(function(e) {
-      e.preventDefault();
+    const employee = {
+      first_name: $('#first-name').val(),
+      last_name: $('#last-name').val(),
+      position: $('#position').val(),
+      branch: $('#branch').val(),
+      start_date: $('#start-date').val(),
+      salary: parseFloat($('#salary').val())
+    };
 
-      const employee = {
-          first_name: $('#first-name').val(),
-          last_name: $('#last-name').val(),
-          position: $('#position').val(),
-          branch: $('#branch').val(),
-          start_date: $('#start-date').val(),
-          salary: parseFloat($('#salary').val())
-      };
+    table.row.add([
+      table.data().count() + 1,
+      employee.first_name,
+      employee.last_name,
+      employee.position,
+      employee.branch,
+      employee.start_date,
+      employee.salary,
+      '<i class="fas fa-edit edit-button"></i><i class="fas fa-trash delete-button"></i>'
+    ]);
 
-      table.row.add([
-          table.data().count() + 1,
-          employee.first_name,
-          employee.last_name,
-          employee.position,
-          employee.branch,
-          employee.start_date,
-          employee.salary,
-          '<i class="fas fa-edit edit-button"></i><i class="fas fa-trash delete-button"></i>'
-      ]).draw(false);
-
-      const employees = table.rows().data().toArray().map(function(row) {
-        return {
-            id: row[0],
-            first_name: row[1],
-            last_name: row[2],
-            position: row[3],
-            branch: row[4],
-            start_date: row[5],
-            salary: row[6]
-        };
-      });
-
-      saveEmployeesToJson(employees);
-
-      $('#employee-form')[0].reset();
+    updateTableAndSave(table);
+    $('#employee-form')[0].reset();
   });
 
   async function loadEmployeesFromServer() {
@@ -99,7 +101,7 @@ $(document).ready(function() {
         }
       }
 
-      table.draw(false);
+      updateTableAndSave(table);
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
     }
@@ -107,26 +109,7 @@ $(document).ready(function() {
 
   loadEmployeesFromServer();
 
-  function saveEmployeesToJson(employees) {
-    const jsonData = JSON.stringify(employees);
-    const serverUrl = '/';
-
-    $.ajax({
-      url: serverUrl + 'save-employees',
-      type: 'POST',
-      data: jsonData,
-      contentType: 'application/json; charset=utf-8',
-      success: function() {
-        console.log('Plik JSON został zapisany pomyślnie.');
-      },
-      error: function(error) {
-        console.error('Błąd podczas zapisywania pliku:', error);
-      }
-    });
-  }
-
-
-  $('#employees-table').on('click', '.edit-button', function() {
+  $('#employees-table').on('click', '.edit-button', function () {
     const data = table.row($(this).closest('tr')).data();
     const employeeId = data[0];
 
@@ -152,9 +135,9 @@ $(document).ready(function() {
     $('#list-employees-view').hide();
   });
 
-  $('#edit-employee-form').submit(function(e) {
+  $('#edit-employee-form').submit(function (e) {
     e.preventDefault();
-  
+
     // Pobierz zmienione dane z formularza edycji
     const employeeId = $('#edit-employee-id').val();
     const firstName = $('#edit-first-name').val();
@@ -163,7 +146,7 @@ $(document).ready(function() {
     const branch = $('#edit-branch').val();
     const startDate = $('#edit-start-date').val();
     const salary = $('#edit-salary').val();
-  
+
     // Zaktualizuj dane w tabeli
     const rowIndex = table.row('#row-' + employeeId).index();
     table.cell(rowIndex, 1).data(firstName);
@@ -172,22 +155,9 @@ $(document).ready(function() {
     table.cell(rowIndex, 4).data(branch);
     table.cell(rowIndex, 5).data(startDate);
     table.cell(rowIndex, 6).data(salary);
-  
-    // Zapisz zmienione dane do pliku JSON
-    const employees = table.rows().data().toArray().map(function(row) {
-      return {
-        id: row[0],
-        first_name: row[1],
-        last_name: row[2],
-        position: row[3],
-        branch: row[4],
-        start_date: row[5],
-        salary: row[6]
-      };
-    });
-  
-    saveEmployeesToJson(employees);
-  
+
+    updateTableAndSave(table);
+
     // Wyświetl widok tabeli
     $('#add-employee-view').hide();
     $('#edit-employee-view').hide();
@@ -195,46 +165,34 @@ $(document).ready(function() {
   });
 
   // Usunięcie wiersza po kliknięciu przycisku "Usuń"
-$('#employees-table').on('click', '.delete-button', function() {
+  $('#employees-table').on('click', '.delete-button', function () {
     const data = table.row($(this).closest('tr')).data();
     const employeeId = data[0];
-  
-    table.row($(this).closest('tr')).remove().draw(false);
-  
-    // Usunięcie pracownika z listy pracowników
-    const employees = table.rows().data().toArray().map(function(row) {
-      return {
-        id: row[0],
-        first_name: row[1],
-        last_name: row[2],
-        position: row[3],
-        branch: row[4],
-        start_date: row[5],
-        salary: row[6]
-      };
-    });
-  
-    saveEmployeesToJson(employees);
-  
+
+    table.row($(this).closest('tr')).remove();
+
+    updateTableAndSave(table);
+
     // Wyświetlenie widoku tabeli
     $('#add-employee-view').hide();
     $('#edit-employee-view').hide();
     $('#list-employees-view').show();
   });
 
-  $('#export-csv').click(function() {
-      const csvData = table.rows().data().toArray().map(function(row) {
-          return row.slice(1, row.length - 1).join(';');
-      }).join('\n');
+  // export do CSV
+  $('#export-csv').click(function () {
+    const csvData = table.rows().data().toArray().map(function (row) {
+      return row.slice(1, row.length - 1).join(';');
+    }).join('\n');
 
-      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', 'employees.csv');
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    const blob = new Blob([csvData], {type: 'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'employees.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });
 });
