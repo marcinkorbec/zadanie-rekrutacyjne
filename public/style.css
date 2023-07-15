@@ -81,6 +81,11 @@ h2, h1 {
   max-width: 100%;
 }
 
+.navbar-toggler {
+  position: relative;
+  right: 0;
+}
+
 @media (max-width: 990px) {
   #menu-separator {
     display: none;
@@ -89,4 +94,12 @@ h2, h1 {
   .nav-item {
     padding-left: 15px;
   }
+
+  #list-employees-view h2 {
+    text-align: center;
+  }
+}
+
+footer div {
+  text-align: center;
 }

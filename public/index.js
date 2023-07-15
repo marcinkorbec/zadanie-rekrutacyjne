@@ -29,11 +29,6 @@ $(document).ready(function() {
         $('#list-employees-view').show();
     });
 
-    $('#introduction-view').on('load', function() {
-        const audio = document.getElementById('startup-sound');
-        audio.play();
-    });
-
   $('#employee-form').submit(function(e) {
       e.preventDefault();
 
