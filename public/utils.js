@@ -31,6 +31,41 @@ function saveEmployeesToJson(table) {
   });
 }
 
+function hidingViewsAfterPageLoad () {
+  $('#add-employee-view').hide();
+  $('#list-employees-view').hide();
+  $('#edit-employee-view').hide();
+}
+
+function displayFormView () {
+  $('#add-employee-link').click(function () {
+    $('#list-employees-view').hide();
+    $('#introduction-view').hide();
+    $('#edit-employee-view').hide();
+    $('#add-employee-view').show();
+  });
+};
+
+function displayEmployeeListView () {
+  $('#list-employees-link').click(function () {
+    $('#add-employee-view').hide();
+    $('#introduction-view').hide();
+    $('#edit-employee-view').hide();
+    $('#list-employees-view').show();
+  });
+}
+
+function displayTableView () {
+  $('#add-employee-view').hide();
+  $('#edit-employee-view').hide();
+  $('#list-employees-view').show();
+}
+
+function displayEditView () {
+  $('#edit-employee-view').show();
+  $('#list-employees-view').hide();
+};
+
 function updateTableAndSave(table) {
   table.draw(false);
   saveEmployeesToJson(table);

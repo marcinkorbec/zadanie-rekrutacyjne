@@ -11,30 +11,9 @@ $(document).ready(function () {
     paging: true
   });
 
-  // Ukrywanie widoków na początku
-  $('#add-employee-view').hide();
-  $('#list-employees-view').hide();
-  $('#edit-employee-view').hide();
-
-  // Wyświetlanie widoku formularza po kliknięciu w link
-  $('#add-employee-link').click(function () {
-    $('#list-employees-view').hide();
-    $('#introduction-view').hide();
-    $('#edit-employee-view').hide();
-    $('#add-employee-view').show();
-  });
-
-  // Wyświetlanie widoku listy pracowników po kliknięciu w link
-  $('#list-employees-link').click(function () {
-    $('#add-employee-view').hide();
-    $('#introduction-view').hide();
-    $('#edit-employee-view').hide();
-    $('#list-employees-view').show();
-  });
-
-  $('.hamburger-button').click(function () {
-    $('.hamburger-menu').toggleClass('open');
-  });
+  hidingViewsAfterPageLoad();
+  displayFormView();
+  displayEmployeeListView();
 
   $(document).ready(function () {
     $('.navbar-toggler').click(function () {
@@ -130,9 +109,7 @@ $(document).ready(function () {
     $('#edit-start-date').val(startDate);
     $('#edit-salary').val(salary);
 
-    // Wyświetl formularz edycji
-    $('#edit-employee-view').show();
-    $('#list-employees-view').hide();
+    displayEditView();
   });
 
   $('#edit-employee-form').submit(function (e) {
@@ -157,26 +134,15 @@ $(document).ready(function () {
     table.cell(rowIndex, 6).data(salary);
 
     updateTableAndSave(table);
-
-    // Wyświetl widok tabeli
-    $('#add-employee-view').hide();
-    $('#edit-employee-view').hide();
-    $('#list-employees-view').show();
+    displayTableView();
   });
 
   // Usunięcie wiersza po kliknięciu przycisku "Usuń"
   $('#employees-table').on('click', '.delete-button', function () {
     const data = table.row($(this).closest('tr')).data();
-    const employeeId = data[0];
-
     table.row($(this).closest('tr')).remove();
-
     updateTableAndSave(table);
-
-    // Wyświetlenie widoku tabeli
-    $('#add-employee-view').hide();
-    $('#edit-employee-view').hide();
-    $('#list-employees-view').show();
+    displayTableView();
   });
 
   // export do CSV

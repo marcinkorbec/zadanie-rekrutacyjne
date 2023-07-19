@@ -3,7 +3,6 @@ body {
   left: 0;
   min-height: 100vh;
   background: linear-gradient(to right, #6ebce2, #3a7fd5);
-  /* box-shadow: inset 0 -5px 10px rgba(0,0,0,.1); */
 }
 
 .container, modal {
@@ -81,15 +80,13 @@ h2, h1 {
   max-width: 100%;
 }
 
-
-#logo-link {
-  transition: opacity 0.3s ease; /* Dodajemy efekt przejścia */
-}
-
 .hide-logo #logo-link {
   display: none;
 }
 
+footer div {
+  text-align: center;
+}
 
 @media (max-width: 990px) {
   body {
@@ -115,6 +112,4 @@ h2, h1 {
   }
 }
 
-footer div {
-  text-align: center;
-}
+
